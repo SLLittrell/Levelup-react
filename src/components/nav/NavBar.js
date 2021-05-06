@@ -9,7 +9,7 @@ export const NavBar = (props) => {
                 Navigation link
             </li>
             <li className="navbar__item">
-                Navigation link
+                <Link className="nav-link" to="/games">Games</Link>
             </li>
             <li className="navbar__item">
                 Navigation link
@@ -31,6 +31,7 @@ export const NavBar = (props) => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/register">Register</Link>
                         </li>
+                        
                     </>
             }        </ul>
     )
