@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from "react"
+import { useHistory } from "react-router"
 import { EventContext } from "./EventProvider.js"
 
 export const EventList = (props) => {
     const { events, getEvents } = useContext(EventContext)
+    const history = useHistory()
 
     useEffect(() => {
         getEvents()
@@ -16,7 +18,7 @@ export const EventList = (props) => {
             {
                 events.map(event => {
                     return <section key={event.id} className="registration">
-                        <div className="registration__game">{event.game.name}</div>
+                        <div className="registration__game">{event.game.title}</div>
                         <div>{event.description}</div>
                         <div>
                             {
@@ -33,6 +35,11 @@ export const EventList = (props) => {
                     </section>
                 })
             }
+            <button className="btn btn-2 btn-sep icon-create"
+                onClick={() => {
+                    history.push({ pathname: "/events/create" })
+                }}>Create a New Event
+            </button>
         </article >
     )
 }
