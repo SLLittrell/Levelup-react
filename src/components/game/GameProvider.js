@@ -27,6 +27,27 @@ export const GameProvider = (props) => {
         })
         .then(getGames)
     }
+
+    const getGameById = (gameId) => {
+        return fetch(`http://localhost:8000/games/${gameId}`, {
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("lu_token")}`
+            }
+        })
+            .then(response => response.json())
+    }
+
+    const updateGame = (game) => {
+        return fetch(`http://localhost:8000/games/${game.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("lu_token")}`
+            },
+            body: JSON.stringify(game)
+        })
+        .then(getGames)
+    }
     
     const getGameTypes = () => {
         return fetch("http://localhost:8000/gamecategories", { 

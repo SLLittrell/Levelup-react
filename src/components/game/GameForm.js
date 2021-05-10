@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from "react"
 import { GameContext } from "./GameProvider.js"
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 
 export const GameForm = () => {
     const history = useHistory()
-    const { createGame, getGameTypes, gameTypes } = useContext(GameContext)
-
+    const { createGame, getGameTypes, gameTypes, updateGame } = useContext(GameContext)
+    const {gameId} = useParams()
     /*
         Since the input fields are bound to the values of
         the properties of this state variable, you need to
@@ -26,6 +26,11 @@ export const GameForm = () => {
     */
     useEffect(() => {
         getGameTypes()
+        .then(()=>{
+            if(gameId){
+                getGameById(gameId).then(setCurrentGame)
+            }
+        })
     }, [])
 
     /*
@@ -79,7 +84,7 @@ export const GameForm = () => {
                     <select  id="categoryId" value={currentGame.categoryId}
                         onChange={changeGameState}>
                         <option value={0}>Choose a type</option>
-                       {gameTypes.map(type => <option value={type.id}>{type.label}</option>)} 
+                       {gameTypes.map(type => <option key={type.id} value={type.id}>{type.label}</option>)} 
                         
                     </select>
                 </div>
