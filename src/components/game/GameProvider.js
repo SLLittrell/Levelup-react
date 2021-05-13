@@ -35,6 +35,15 @@ export const GameProvider = (props) => {
             }
         })
             .then(response => response.json())
+            .then(response => {
+                return {
+                    skillLevel: response.skill_level,
+                    numberOfPlayers: response.number_of_players,
+                    title: response.title,
+                    maker: response.maker,
+                    categoryId: response.game_category.id
+                }
+            })
     }
 
     const updateGame = (game) => {
@@ -60,7 +69,7 @@ export const GameProvider = (props) => {
     }
 
     return (
-        <GameContext.Provider value={{ games, getGames, gameTypes, createGame, getGameTypes }} >
+        <GameContext.Provider value={{ games, getGames, gameTypes, createGame, getGameTypes, getGameById, updateGame }} >
             { props.children }
         </GameContext.Provider>
     )

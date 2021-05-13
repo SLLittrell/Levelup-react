@@ -5,7 +5,7 @@ import { useHistory, useParams } from 'react-router-dom'
 
 export const GameForm = () => {
     const history = useHistory()
-    const { createGame, getGameTypes, gameTypes, updateGame } = useContext(GameContext)
+    const { createGame, getGameTypes, gameTypes, updateGame, getGameById } = useContext(GameContext)
     const {gameId} = useParams()
     /*
         Since the input fields are bound to the values of
@@ -53,7 +53,7 @@ export const GameForm = () => {
 
     return (
         <form className="gameForm">
-            <h2 className="gameForm__title">Register New Game</h2>
+            <h2 className="gameForm__title">{gameId?"Edit Game":"Register New Game"}</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="title">Title: </label>
@@ -104,14 +104,29 @@ export const GameForm = () => {
                         skillLevel: parseInt(currentGame.skillLevel),
                         categoryId: parseInt(currentGame.categoryId)
                     }
+                        const updatedGame = {
+                        id:gameId,
+                        maker: currentGame.maker,
+                        title: currentGame.title,
+                        numberOfPlayers: parseInt(currentGame.numberOfPlayers),
+                        skillLevel: parseInt(currentGame.skillLevel),
+                        categoryId: parseInt(currentGame.categoryId)
+                    }
 
                     // Send POST request to your API
-                    createGame(game)
+                    if(gameId){
+                        updateGame(updatedGame)
                         .then(() => history.push("/games"))
+                    }
+                    else{createGame(game)
+                    .then(() => history.push("/games"))
+                    }
+                    
+                    
                     }
                     
                 }}
-                className="btn btn-primary">Create</button>
+            className="btn btn-primary">{gameId?"Save Game":"Create"}</button>
         </form>
     )
 }

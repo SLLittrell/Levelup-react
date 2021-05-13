@@ -35,7 +35,7 @@ export const EventProvider = (props) => {
             }
         })
             .then(response => response.json())
-            .then(getEvents)
+            // .then(getEvents)
     }
 
     const joinEvent = eventId => {
